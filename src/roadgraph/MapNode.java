@@ -1,7 +1,7 @@
 package roadgraph;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import geography.GeographicPoint;
@@ -11,26 +11,23 @@ import geography.GeographicPoint;
  */
 public class MapNode {
 
+    /** The latitude and longitude of this node */
 	private GeographicPoint location;
-	private List<MapEdge> edges;
+	
+	/** The list of edges out of this node */
+	private Set<MapEdge> edges;
 	
 	public MapNode(GeographicPoint location) {
 		this.location = location;
-		this.edges = new ArrayList<>();
+		this.edges = new HashSet<>();
 	}
 	
 	public GeographicPoint getLocation() {
 		return this.location;
 	}
-	public void setLocation(GeographicPoint location) {
-		this.location = location;
-	}
 	
-	public List<MapEdge> getEdges() {
+	public Set<MapEdge> getEdges() {
 		return this.edges;
-	}
-	public void setEdges(List<MapEdge> edges) {
-		this.edges = edges;
 	}
 	
 	/**
@@ -63,11 +60,53 @@ public class MapNode {
 	 * Returns the list of neighbors of this node represented as GeographicPoints.
 	 * @return
 	 */
-	public List<GeographicPoint> getNeighbors() {
-		return this.edges.stream().map(MapEdge::getEnd).collect(Collectors.toList());
+	public Set<MapNode> getNeighbors() {
+		return this.edges.stream().map(MapEdge::getEnd).collect(Collectors.toSet());
 	}
 	
+	public boolean hasNodeAsNeighbor(MapNode other) {
+	    return getDistanceToNode(other).equals(Double.POSITIVE_INFINITY);
+	}
+	
+	/**
+	 * Returns the distance from this node to another node.
+	 * If the other node is unreachable, then distance is set to infinity.
+	 * @param other    a MapNode
+	 * @return         the distance to the other node
+	 */
+	public Double getDistanceToNode(MapNode other) {
+	    Double d = Double.POSITIVE_INFINITY;
+	    for (MapEdge e : this.edges) {
+	        if (e.getEnd().equals(other)) {
+	            d = e.getLength();
+	            break;
+	        }
+	    }
+	    return d;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+	    if (o == null || !(o instanceof MapNode)) {
+	        return false;
+	    }
+	    MapNode node = (MapNode) o;
+	    return node.location.equals(this.location);
+	};
+	
+	@Override
+	public int hashCode() {
+	    return this.location.hashCode();
+	};
+	
+	@Override
 	public String toString() {
-		return "(" + this.location.getX() + "," + this.location.getY() + ")";
+	    String toReturn = "[NODE at location (" + location + ")";
+        toReturn += " intersects streets: ";
+        for (MapEdge e: edges) {
+            toReturn += e.getRoadName() + ", ";
+        }
+        toReturn += "]";
+        return toReturn;
 	}
 }

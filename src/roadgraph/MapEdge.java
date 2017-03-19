@@ -1,50 +1,56 @@
 package roadgraph;
 
-import geography.GeographicPoint;
-
 /**
  * Represents an edge in a {@link MapGraph}.
  */
 public class MapEdge {
 
-	private GeographicPoint start;
-	private GeographicPoint end;
+    /** THe two end points of the edge */
+	private MapNode start;
+	private MapNode end;
+	
+	/** The name of the road */
 	private String roadName;
+	
+	/** The type of the road */
 	private String roadType;
 	
-	public MapEdge(GeographicPoint start, GeographicPoint end, String roadName, String roadType) {
-		this.start = start;
-		this.end = end;
-		this.roadName = roadName;
-		this.roadType = roadType;
+	/** THe length of the road segment, in km */
+	private Double length;
+	
+	static final Double DEFAULT_LENGTH = 0.01;
+	
+	public MapEdge(MapNode start, MapNode end, String roadName, String roadType) {
+		this(start, end, roadName, roadType, DEFAULT_LENGTH);
 	}
 	
-	public GeographicPoint getStart() {
+	public MapEdge(MapNode start, MapNode end,
+	        String roadName, String roadType, double length) {
+        this.start = start;
+        this.end = end;
+        this.roadName = roadName;
+        this.roadType = roadType;
+        this.length = length;
+    }
+	
+	public MapNode getStart() {
 		return this.start;
 	}
-	public void setStart(GeographicPoint start) {
-		this.start = start;
-	}
 	
-	public GeographicPoint getEnd() {
+	public MapNode getEnd() {
 		return this.end;
-	}
-	public void setEnd(GeographicPoint end) {
-		this.end = end;
 	}
 	
 	public String getRoadName() {
 		return this.roadName;
 	}
-	public void setRoadName(String roadName) {
-		this.roadName = roadName;
-	}
 	
 	public String getRoadType() {
 		return this.roadType;
 	}
-	public void setRoadType(String roadType) {
-		this.roadType = roadType;
+	
+	public Double getLength() {
+	    return this.length;
 	}
 	
 	public String toString() {
