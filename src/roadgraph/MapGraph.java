@@ -7,6 +7,7 @@
  */
 package roadgraph;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -58,6 +59,15 @@ public class MapGraph {
 	{
 		return this.pointNodeMap.keySet();
 	}
+	
+	/**
+	 * Return the vertices of this graph as MapNodes
+	 * @return The vertices in this graph as MapNodes
+	 */
+	public Collection<MapNode> getMapNodes()
+    {
+        return this.pointNodeMap.values();
+    }
 	
 	/**
 	 * Get the number of road segments in the graph

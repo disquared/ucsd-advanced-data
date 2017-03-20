@@ -22,6 +22,11 @@ public class MapNode {
 		this.edges = new HashSet<>();
 	}
 	
+	public MapNode(GeographicPoint location, Set<MapEdge> edges) {
+        this.location = location;
+        this.edges = edges;
+    }
+	
 	public GeographicPoint getLocation() {
 		return this.location;
 	}
@@ -64,8 +69,13 @@ public class MapNode {
 		return this.edges.stream().map(MapEdge::getEnd).collect(Collectors.toSet());
 	}
 	
-	public boolean hasNodeAsNeighbor(MapNode other) {
-	    return getDistanceToNode(other).equals(Double.POSITIVE_INFINITY);
+	/**
+	 * Returns whether a given map node is a neighbor of this node.
+	 * @param other
+	 * @return
+	 */
+	public boolean hasNeighbor(MapNode other) {
+	    return !getDistanceToNode(other).equals(Double.POSITIVE_INFINITY);
 	}
 	
 	/**

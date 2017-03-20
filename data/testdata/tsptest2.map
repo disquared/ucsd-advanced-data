@@ -1,0 +1,7 @@
+4.0 1.0 7.0 3.0 "front" "city street"
+4.0 0.0 4.0 1.0 "state" "city street"
+7.0 3.0 8.0 -1.0 "high" "residential"
+8.0 -1.0 6.5 0.0 "next" "residential"
+6.5 0.0 5.0 1.0 "first" "residential"
+4.0 1.0 5.0 1.0 "main" "city street"
+5.0 1.0 4.0 0.0 "short" "connector"
